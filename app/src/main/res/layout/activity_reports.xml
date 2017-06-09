@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".ReportsActivity">
+
+    <!--put sync button on action bar -->
+
+    <TableLayout android:id="@+id/boundary_display"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="*">
+        <TableRow>
+            <TextView style="@style/label_text"
+                android:text="@string/district"
+                android:gravity="start"/>
+            <TextView style="@style/label_text"
+                android:text="@string/block"
+                android:gravity="end"/>
+        </TableRow>
+        <TableRow>
+            <TextView style="@style/value_text"
+                android:id="@+id/dist_name"
+                android:gravity="start"
+                android:textAlignment="textStart" />
+            <TextView style="@style/value_text"
+                android:id="@+id/blck_name"
+                android:gravity="end"
+                android:textAlignment="textEnd" />
+        </TableRow>
+        <TableRow android:paddingTop="10dp">
+            <TextView style="@style/label_text."
+                android:text="@string/cluster"
+                android:gravity="start"
+                android:textAlignment="textStart" />
+        </TableRow>
+        <TableRow>
+            <TextView style="@style/value_text."
+                android:id="@+id/clst_name"
+                android:gravity="start"
+                android:textAlignment="textStart" />
+        </TableRow>
+    </TableLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vpPager"
+        android:layout_below="@id/boundary_display"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="30dp">
+    </android.support.v4.view.ViewPager>
+
+</RelativeLayout>

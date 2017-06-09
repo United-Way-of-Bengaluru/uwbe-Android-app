@@ -1,0 +1,107 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.github.triplet.play'
+apply plugin: 'io.fabric'
+
+android {
+    signingConfigs {
+        release
+    }
+
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
+
+    defaultConfig {
+        applicationId "in.org.klp.konnect"
+        minSdkVersion 15
+        targetSdkVersion 23
+        versionCode 38
+        versionName "1.2.1"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+    productFlavors {
+        local {
+            applicationId "in.org.klp.konnect.local"
+            resValue "string", "app_name", "KLP Konnect Local"
+            buildConfigField 'String', 'HOST', '"http://192.168.1.105:8001"'
+//            buildConfigField 'String', 'HOST', '"https://klp.org.in"'
+        }
+        devel {
+            applicationId "in.org.klp.konnect.development"
+            resValue "string", "app_name", "KLP Konnect Dev"
+            buildConfigField 'String', 'HOST', '"https://dev.klp.org.in"'
+        }
+        prod {
+            applicationId "in.org.klp.konnect"
+            resValue "string", "app_name", "KLP Konnect"
+            // change this back to https://klp.org.in after testing phase is done
+            buildConfigField 'String', 'HOST', '"https://klp.org.in"'
+        }
+    }
+}
+
+repositories {
+    jcenter()
+
+    maven { url 'https://maven.fabric.io/public' }
+}
+
+apply plugin: 'com.neenbedankt.android-apt'
+
+play {
+    jsonFile = file('Google Play Android Developer-0b17472fdb08.json')
+    track = 'alpha'
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.android.support:design:23.4.0'
+    compile 'com.android.support:support-v4:23.4.0'
+    compile 'com.google.android.gms:play-services-appindexing:9.8.0'
+
+    compile 'com.zsoltsafrany:needle:1.0.0'
+
+    compile 'com.squareup.okhttp3:okhttp:3.4.2'
+
+    // squidb - https://github.com/yahoo/squidb
+    compile 'com.yahoo.squidb:squidb:3.0.0'
+    compile 'com.yahoo.squidb:squidb-annotations:3.0.0'
+    compile 'com.yahoo.squidb:squidb-android:3.0.0'
+    apt 'com.yahoo.squidb:squidb-processor:3.0.0'
+
+    // SQLite Asset Helper - https://github.com/jgilfelt/android-sqlite-asset-helper
+    compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:+'
+    // Volley - https://android.googlesource.com/platform/frameworks/volley
+    compile 'com.android.volley:volley:1.0.0'
+
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
+        transitive = true;
+    }
+}
+
+def Properties props = new Properties()
+def propFile = new File('release.properties')
+if (propFile.canRead()) {
+    props.load(new FileInputStream(propFile))
+
+    if (props != null && props.containsKey('KEYSTORE') && props.containsKey('KEYSTORE_PASSWORD') &&
+            props.containsKey('KEY_ALIAS') && props.containsKey('KEY_PASSWORD')) {
+        android.signingConfigs.release.storeFile = file(props['KEYSTORE'])
+        android.signingConfigs.release.storePassword = props['KEYSTORE_PASSWORD']
+        android.signingConfigs.release.keyAlias = props['KEY_ALIAS']
+        android.signingConfigs.release.keyPassword = props['KEY_PASSWORD']
+    } else {
+        println 'release.properties found but some entries are missing'
+        android.buildTypes.release.signingConfig = null
+    }
+} else {
+    println 'release.properties not found'
+    android.buildTypes.release.signingConfig = null
+}

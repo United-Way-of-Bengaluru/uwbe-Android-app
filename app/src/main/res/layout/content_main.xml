@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context="in.org.klp.konnect.MainActivity"
+    android:stretchColumns="0,1">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:src="@drawable/konnect"
+        android:cropToPadding="false"
+        android:layout_marginTop="20dp" />
+
+    <TableRow>
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Survey"
+            android:id="@+id/survey_button"
+            android:textColor="@color/colorWhite"
+            android:background="@color/colorBrandTurquoise"
+            android:drawableTop="@mipmap/ic_button_people"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:textSize="8pt"/>
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Update Surveys"
+            android:id="@+id/sync_button"
+            android:textColor="@color/colorWhite"
+            android:background="@color/colorBrandTurquoise"
+            android:drawableTop="@mipmap/ic_button_sync"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:textSize="8pt"/>
+    </TableRow>
+</TableLayout>
